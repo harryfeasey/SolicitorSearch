@@ -16,7 +16,17 @@ class SolicitorScraper : ISolicitorScraper
 
     public async Task<string> ScrapeSolicitorsByLocation(string location)
     {
-        var url = $"{_config["SolicitorsCom:BaseUrl"]}/{location}-solicitors.html";
-        throw new NotImplementedException();
+        var url = GetUrlForLocation(location);
+        var response = await _httpClient.GetAsync(url);
+        if (!response.IsSuccessStatusCode)
+            throw new Exception($"Failed to scrape solicitors for location {location}. Status code: {response.StatusCode}");
+
+        var content = await response.Content.ReadAsStringAsync();
+        return content;
+    }
+
+    private string GetUrlForLocation(string location)
+    {
+        return $"{_config["SolicitorsCom:BaseUrl"]}/{location}-solicitors.html";
     }
 }

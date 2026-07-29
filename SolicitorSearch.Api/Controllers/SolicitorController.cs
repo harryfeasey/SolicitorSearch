@@ -9,12 +9,12 @@ public class SolicitorController : ControllerBase
 {
     private readonly ISolicitorService _solicitorService;
 
-    public SolicitorController(SolicitorService solicitorService)
+    public SolicitorController(ISolicitorService solicitorService)
     {
         _solicitorService = solicitorService;
     }
 
-    [HttpGet("/{location}")]
+    [HttpGet("/Solicitor/{location}")]
     public async Task<IActionResult> Get(string location)
     {
         var solicitors = await _solicitorService.GetSolicitorsByLocation(location);

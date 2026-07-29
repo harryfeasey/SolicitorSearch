@@ -2,11 +2,11 @@ namespace Models
 {    
     public class Solicitor
     {
-        private string Name { get; set; }
-        private string Address {get; set;}
-        private string City { get; set; }
-        private string Postcode { get; set; }
-        private string PhoneNumber { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Address {get; set;} = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Postcode { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
         
     }
 }
