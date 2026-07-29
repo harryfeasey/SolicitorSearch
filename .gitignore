@@ -1,0 +1,74 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# Visual Studio and .NET files
+*.user
+*.userosscache
+*.suo
+*.cache
+*.ilk
+*.log
+*.pdb
+*.obj
+*.exe
+*.dll
+*.nupkg
+*.snk
+
+# Visual Studio project files
+*.csproj.user
+*.vcxproj.user
+*.dbmdl
+*.psess
+*.vsp
+*.vspx
+*.sap
+*.cachefile
+*.sdf
+*.opensdf
+*.vspscc
+*.vsscc
+
+# VS Code workspace settings
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio temporary folders
+.vs/
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# ASP.NET
+appsettings.Development.json
+launchSettings.json
+
+# User-specific files
+*.bak
+*.backup
+*.orig
+*.rej
+
+# Test result files
+TestResults/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+
+# Azure Pipelines
+.azure-pipelines/**
+
+# Local secrets
+secrets.json
