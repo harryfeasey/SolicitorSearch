@@ -14,19 +14,22 @@ public class SolicitorParser : ISolicitorParser
 
         foreach (var match in html.Split("<div class=\"result-item").Skip(1))
         {
-            Console.WriteLine($"Match value: {match.Trim()}");
-            var block = match.Trim();
+            var trimmedMatch = match.Trim();
+            var name = Extract(trimmedMatch, "<span class=\"h2\">(.*?)<div");
 
-            var solicitor = new Solicitor
+            if (!string.IsNullOrEmpty(name))
             {
-                Name = Extract(block, "<span class=\"h2\">(.*?)<div"),
-                PhoneNumber = Extract(block, "href=\"tel:[^\"]+\">(.*?)</a>"),
-                Address = Extract(block, "<address>(.*?)</address>")
-            };
+                var solicitor = new Solicitor
+                {
+                    Name = name,
+                    PhoneNumber = Extract(trimmedMatch, "href=\"tel:[^\"]+\">(.*?)</a>"),
+                    Address = Extract(trimmedMatch, "<address>(.*?)</address>")
+                };
 
-            PopulateAddressParts(solicitor);
+                PopulateAddressParts(solicitor);
 
-            parsedEntries.Add(solicitor);
+                parsedEntries.Add(solicitor);
+            }
         }
         return parsedEntries;
     }

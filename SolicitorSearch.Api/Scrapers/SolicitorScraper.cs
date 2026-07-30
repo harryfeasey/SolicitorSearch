@@ -27,7 +27,7 @@ class SolicitorScraper : ISolicitorScraper
         if (!response.IsSuccessStatusCode)
             throw new Exception($"Failed to scrape solicitors for location {location}. Status code: {response.StatusCode}");
 
-        Console.WriteLine($"Request sent to {response.RequestMessage?.RequestUri}, response = {response.StatusCode}");
+        Console.WriteLine($"Request sent to {response.RequestMessage?.RequestUri}, status = {response.StatusCode}");
 
         var content = await response.Content.ReadAsStringAsync();
 
