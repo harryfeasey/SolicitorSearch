@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Models;
 
 public interface ISolicitorParser
@@ -9,38 +10,54 @@ public class SolicitorParser : ISolicitorParser
 {
     public IEnumerable<Solicitor> Parse(string html)
     {
-        var results = new List<Solicitor>();
+        var parsedEntries = new List<Solicitor>();
 
-        const string listingStart = "<div class=\"result-item\">";
-
-        foreach (var entryHtml in html.Split(listingStart, StringSplitOptions.RemoveEmptyEntries))
+        foreach (var match in html.Split("<div class=\"result-item").Skip(1))
         {
+            Console.WriteLine($"Match value: {match.Trim()}");
+            var block = match.Trim();
 
-            results.Add(new Solicitor
+            var solicitor = new Solicitor
             {
-                Name = Extract(entryHtml, "<h2>", "</h2>"),
-                PhoneNumber = Extract(entryHtml, "<span class=\"phone\">", "</span>")
-            });
+                Name = Extract(block, "<span class=\"h2\">(.*?)<div"),
+                PhoneNumber = Extract(block, "href=\"tel:[^\"]+\">(.*?)</a>"),
+                Address = Extract(block, "<address>(.*?)</address>")
+            };
 
+            PopulateAddressParts(solicitor);
+
+            parsedEntries.Add(solicitor);
         }
-
-        return results;
+        return parsedEntries;
     }
 
-    private static string Extract(string html, string startTag, string endTag)
+    private static string Extract(string html, string valueRegex)
     {
-        int startIndex = html.IndexOf(startTag, StringComparison.OrdinalIgnoreCase);
+        var match = Regex.Match(
+            html,
+            valueRegex,
+            RegexOptions.Singleline);
 
-        if (startIndex == -1)
-            return string.Empty;
+        return Clean(match.Groups[1].Value);
+    }
 
-        startIndex += startTag.Length;
 
-        int endIndex = html.IndexOf(endTag, startIndex, StringComparison.OrdinalIgnoreCase);
+    private static void PopulateAddressParts(Solicitor solicitor)
+    {
+        var parts = solicitor.Address
+            .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-        if (endIndex == -1)
-            return string.Empty;
+        if (parts.Length >= 2)
+        {
+            solicitor.City = parts[^2];
+            solicitor.Postcode = parts[^1];
+        }
+    }
 
-        return html[startIndex..endIndex].Trim();
+    private static string Clean(string value)
+    {
+        value = Regex.Replace(value, "<.*?>", string.Empty);
+        var decoded = System.Net.WebUtility.HtmlDecode(value);
+        return decoded.Replace('\u00A0', ' ').Trim();
     }
 }

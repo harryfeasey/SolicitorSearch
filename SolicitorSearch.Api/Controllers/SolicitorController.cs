@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Models;
 
 namespace SolicitorSearch.Api.Controllers;
 
