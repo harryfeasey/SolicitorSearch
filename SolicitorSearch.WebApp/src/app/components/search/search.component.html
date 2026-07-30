@@ -1,0 +1,10 @@
+
+<div class="d-flex justify-content-center">
+    <select class="custom-select " id="locationSelect" [(value)]="selectedLocation">
+        <option selected>Select location...</option>
+        @for(location of locationOptions; track location) {
+            <option [value]="location.toLowerCase()">{{ location }}</option>
+        }
+    </select>
+    <button type="button" class="btn btn-outline-primary" (click)="onSearch(selectedLocation)">Search</button>
+</div>

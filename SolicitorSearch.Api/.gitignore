@@ -63,12 +63,5 @@ TestResults/
 .DS_Store
 Thumbs.db
 
-# NUnit
-*.VisualState.xml
-TestResult.xml
-
 # Azure Pipelines
 .azure-pipelines/**
-
-# Local secrets
-secrets.json
