@@ -17,11 +17,20 @@ class SolicitorScraper : ISolicitorScraper
     public async Task<string> ScrapeSolicitorsByLocation(string location)
     {
         var url = GetUrlForLocation(location);
+
+        //Simulate a browser request to avoid being blocked by the website.
+        _httpClient.DefaultRequestHeaders.Add(
+            "User-Agent",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36");
+        
         var response = await _httpClient.GetAsync(url);
         if (!response.IsSuccessStatusCode)
             throw new Exception($"Failed to scrape solicitors for location {location}. Status code: {response.StatusCode}");
 
+        Console.WriteLine($"Request sent to {response.RequestMessage?.RequestUri}, response = {response.StatusCode}");
+
         var content = await response.Content.ReadAsStringAsync();
+
         return content;
     }
 
