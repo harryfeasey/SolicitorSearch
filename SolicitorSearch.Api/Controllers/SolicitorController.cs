@@ -13,10 +13,17 @@ public class SolicitorController : ControllerBase
         _solicitorService = solicitorService;
     }
 
-    [HttpGet("/Solicitor/{location}")]
+    [HttpGet("/SolicitorApi/{location}")]
     public async Task<IActionResult> Get(string location)
     {
         var solicitors = await _solicitorService.GetSolicitorsByLocation(location);
         return Ok(solicitors);
+    }
+
+    [HttpGet("/SolicitorApi/Report/")]
+    public async Task<IActionResult> Get()
+    {
+        var report = await _solicitorService.GetSolicitorsReportForAllLocations();
+        return Ok(report);
     }
 }
