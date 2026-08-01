@@ -23,7 +23,8 @@ public class SolicitorParser : ISolicitorParser
                 {
                     Name = name,
                     PhoneNumber = Extract(trimmedMatch, "href=\"tel:[^\"]+\">(.*?)</a>"),
-                    Address = Extract(trimmedMatch, "<address>(.*?)</address>")
+                    Address = Extract(trimmedMatch, "<address>(.*?)</address>"),
+                    StarRating = ExtractRating(trimmedMatch)
                 };
 
                 PopulateAddressParts(solicitor);
@@ -44,6 +45,27 @@ public class SolicitorParser : ISolicitorParser
         return Clean(match.Groups[1].Value);
     }
 
+    private static double? ExtractRating(string html)
+    {
+        var match = Regex.Match(
+            html,
+            @"<span class=""rev-results"">(.*?)</span>",
+            RegexOptions.Singleline);
+
+        string ratingHtml = match.Value;
+
+        int fullStar = Regex.Matches(ratingHtml, @"star-full").Count;
+        int halfStar = Regex.Matches(ratingHtml, @"star-half").Count;
+        int noneStar = Regex.Matches(ratingHtml, @"star-none").Count;
+
+        if (fullStar == 0 && halfStar == 0 && noneStar == 0)
+        {
+            return null; // No rating found
+        }
+
+        return fullStar + (halfStar * 0.5);
+    }
+
 
     private static void PopulateAddressParts(Solicitor solicitor)
     {
@@ -52,7 +74,7 @@ public class SolicitorParser : ISolicitorParser
 
         if (parts.Length >= 2)
         {
-            solicitor.City = parts[^2];
+            solicitor.Location = parts[^2];
             solicitor.Postcode = parts[^1];
         }
     }

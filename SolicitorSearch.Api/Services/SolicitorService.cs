@@ -22,7 +22,7 @@ public class SolicitorService : ISolicitorService
         var scrapedData = await _solicitorScraper.ScrapeSolicitorsByLocation(location);
 
         // Parse scrapedData to solicitor parser and create List<Solicitor>
-        var solicitors = _solicitorParser.Parse(scrapedData).ToList();
+        var solicitors = _solicitorParser.Parse(scrapedData).OrderByDescending(s => s.StarRating).ToList();
         return solicitors;
     }
 }
