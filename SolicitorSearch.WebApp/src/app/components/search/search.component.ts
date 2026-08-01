@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { LocationEnum } from '../../models/location.enum.model';
 import { CommonModule } from '@angular/common';
 import { Solicitor } from '../../models/solicitor.model';

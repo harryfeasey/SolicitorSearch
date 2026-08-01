@@ -1,1 +1,62 @@
-<p>report.component works!</p>
+<div class="d-flex justify-content-center">
+    <p>{{isLoading() ? 'Please wait, generating report...' : ''}} </p>
+    @if(reportData) {
+        <div>
+            <h2>National Report</h2>
+            <h4>Top 10 Solicitors Nationally: </h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Post Code</th>
+                        <th scope="col">Star Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (solicitor of reportData.topSolicitors; track solicitor.phoneNumber) {
+                        <tr>
+                            <td>{{solicitor.name}}</td>
+                            <td>{{solicitor.phoneNumber}}</td>
+                            <td>{{solicitor.address}}</td>
+                            <td>{{solicitor.location}}</td>
+                            <td>{{solicitor.postcode}}</td>
+                            <td>{{solicitor.starRating ? (solicitor.starRating + "/ 5") : 'Not rated'}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="card-container">
+                <h4>Location Breakdown:</h4>
+                <p>Polled 8 locations, ranked by average star rating.</p>
+                <div class="row">
+                    @for (location of reportData.locationReports; track location.location) {    
+                        <div class="col-md-12">  
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{location.location.toUpperCase()}}</h5>
+                                    <h5 class="card-title mb-2 text-muted">Average Star Rating: {{location.averageStarRating?.toPrecision(3)}}/5</h5>
+                                    <hr/>
+                                    <h5 class="card-text">Top Solicitors:</h5>
+                                    <ul>
+                                        @for (solicitor of location.topSolicitors; track solicitor.phoneNumber) {
+                                            <li class="featuredSolicitor">
+                                                <p class="card-text">
+                                                    <strong>{{solicitor.name}}, {{solicitor.starRating}}/5</strong><br>
+                                                    Ph: {{solicitor.phoneNumber}}
+                                                </p>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+}
+        
+

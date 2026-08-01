@@ -21,7 +21,7 @@
                 <td>{{solicitor.address}}</td>
                 <td>{{solicitor.location}}</td>
                 <td>{{solicitor.postcode}}</td>
-                <td>{{solicitor.starRating ?? 'Not rated'}}</td>
+                <td>{{solicitor.starRating ? (solicitor.starRating + "/ 5") : 'Not rated'}}</td>
             </tr>
             }
         </tbody>
