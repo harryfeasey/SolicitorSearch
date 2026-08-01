@@ -1,7 +1,8 @@
 export interface Solicitor {
   name: string;
-  phone: string;
+  phoneNumber: string;
   address: string;
-  city: string;
-  postCode: string;
+  location: string;
+  postcode: string;
+  starRating?: number;
 }

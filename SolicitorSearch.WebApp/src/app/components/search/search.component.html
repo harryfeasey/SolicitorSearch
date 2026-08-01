@@ -1,10 +1,13 @@
 
-<div class="d-flex justify-content-center">
-    <select class="custom-select " id="locationSelect" [(value)]="selectedLocation">
-        <option selected>Select location...</option>
+<div class="d-flex justify-content-center" id="searchForm">
+    <select class="form-select" id="locationSelect" [(ngModel)]="selectedLocation" (ngModelChange)="onSearch(selectedLocation)">
+        <option value="" selected>Select city...</option>
         @for(location of locationOptions; track location) {
             <option [value]="location.toLowerCase()">{{ location }}</option>
         }
     </select>
-    <button type="button" class="btn btn-outline-primary" (click)="onSearch(selectedLocation)">Search</button>
+    @if(solicitors.length > 0) {
+        <button type="button" class="btn btn-outline-primary" (click)="onSearch(selectedLocation)" [disabled]="isSearching()">{{isSearching() ? 'Searching...' : 'Refresh Search'}}</button>
+    }
 </div>
+<app-search-results [solicitors]="solicitors" [searching]="isSearching()"></app-search-results>

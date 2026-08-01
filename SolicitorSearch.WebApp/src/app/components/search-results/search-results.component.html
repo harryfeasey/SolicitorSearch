@@ -1,0 +1,30 @@
+@if(solicitors.length > 0) {
+    <div id="searchResults">
+        <h2>Search Results</h2>
+        <p>Found {{solicitors.length}} solicitors, ranked by star rating.</p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">Location</th>
+                <th scope="col">Post Code</th>
+                <th scope="col">Star Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (solicitor of solicitors; track solicitor.phoneNumber) {
+            <tr>
+                <td>{{solicitor.name}}</td>
+                <td>{{solicitor.phoneNumber}}</td>
+                <td>{{solicitor.address}}</td>
+                <td>{{solicitor.location}}</td>
+                <td>{{solicitor.postcode}}</td>
+                <td>{{solicitor.starRating ?? 'Not rated'}}</td>
+            </tr>
+            }
+        </tbody>
+        </table>
+    </div>
+}

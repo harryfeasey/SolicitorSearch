@@ -10,10 +10,10 @@ export class SolicitorService {
 
   private http = inject(HttpClient);
 
-  private readonly baseUrl = 'https://localhost:5059/';
+  private readonly baseUrl = 'http://localhost:5059/';
 
   searchByLocation(location: string): Observable<Solicitor[]> {
-    return this.http.get<Solicitor[]>(`${this.baseUrl}/solicitor/${location}`);
+    return this.http.get<Solicitor[]>(`${this.baseUrl}solicitor/${location}`);
   }
 
 //   fetchReport
