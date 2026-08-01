@@ -27,6 +27,10 @@ npm install
 To start and open the front-end in a new browser window, run:
 
 ```bash
-ng serve --open
+ng serve -o
 ```
 
+If "command not found: ng" appears, run this command on Mac, or add the Angular CLI executable to PATH on Windows.
+```bash
+\. "$HOME/.nvm/nvm.sh"
+```

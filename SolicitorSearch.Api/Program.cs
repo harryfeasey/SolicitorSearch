@@ -19,6 +19,8 @@ builder.Services.AddScoped<ISolicitorService, SolicitorService>();
 builder.Services.AddScoped<ISolicitorParser, SolicitorParser>();
 builder.Services.AddScoped<ISolicitorScraper, SolicitorScraper>();
 
+builder.WebHost.UseUrls("http://localhost:5059");
+
 var app = builder.Build();
 app.UseCors(MyAllowSpecificOrigins);
 
